@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="no_actionbar">
+    <RelativeLayout
+        android:id="@+id/upperScreen"
+        android:background="#B2EBF2"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#B2EBF2"
+            android:padding="7dp"
+            android:src="@drawable/back" />
+        <ImageButton
+            android:id="@+id/commentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#B2EBF2"
+            android:src="@drawable/pencil"
+            android:padding="7dp"
+            android:layout_toLeftOf="@+id/subMenuButton" />
+        <ImageButton
+            android:id="@+id/subMenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#B2EBF2"
+            android:padding="7dp"
+            android:src="@drawable/sub_menu"
+            android:layout_alignParentRight="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="환상의 섬에 오신 것을\n                          환영합니다~"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="15dp"
+            android:textSize="20sp"/>
+        <ImageButton
+            android:id="@+id/star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="#00000000"
+            android:src="@drawable/star_circle" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="2dp"
+        android:layout_below="@+id/upperScreen"
+        android:background="#8878909C" />
+
+    <ScrollView
+        android:id="@+id/contentsDetails"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/lowerScreen"
+        android:layout_below="@+id/upperScreen">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ownersTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="10dp"
+                android:text="Owners"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#cc000000"/>
+            <LinearLayout
+                android:id="@+id/ownersContentBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/ownersProfileImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/hello" />
+                <TextView
+                    android:id="@+id/ownersDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:paddingTop="10dp"
+                    android:text="가장 싼 경비로 즐길 수 있는\n제주도 여행" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#8878909C"
+                android:layout_below="@+id/upperScreen" />
+
+            <TextView
+                android:id="@+id/courseTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="Course"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#cc000000"/>
+
+            <TextView
+                android:id="@+id/firstDay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#8878909C"
+                android:text="1일차"
+                android:textSize="15sp"
+                android:paddingTop="5dp"
+                android:paddingLeft="15dp"
+                android:paddingBottom="5dp"/>
+            <RelativeLayout
+                android:id="@+id/firstDayDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+                <TextView
+                    android:id="@+id/subTitle01_01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="레일 바이크"
+                    android:textSize="15sp"
+                    android:textColor="#ff000000"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/expense01_01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10000원"
+                    android:layout_alignParentRight="true"/>
+                <TextView
+                    android:id="@+id/time01_01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/expense01_01"
+                    android:layout_marginBottom="10dp"
+                    android:text="AM 07:00 ~ PM 01:00"
+                    android:textSize="13sp"/>
+                <TextView
+                    android:id="@+id/courseDetails01_01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/time01_01"
+                    android:text="제주도의 풍경을 볼 수 있는 레일바이크!"
+                    android:textColor="#dd000000"/>
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#8878909C"
+                android:layout_below="@+id/upperScreen" />
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:id="@+id/lowerScreen"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#ff000000"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>
