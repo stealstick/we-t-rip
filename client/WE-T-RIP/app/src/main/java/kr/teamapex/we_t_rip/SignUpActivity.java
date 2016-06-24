@@ -3,8 +3,6 @@ package kr.teamapex.we_t_rip;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -20,9 +18,9 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.text.TextUtils;
-import android.transition.Explode;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -48,7 +46,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -65,10 +63,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
+    private UserSighUpTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mIdView;
+    private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
@@ -76,9 +74,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_up);
         // Set up the login form.
-        mIdView = (AutoCompleteTextView) findViewById(R.id.email);
+        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -92,18 +90,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
-        getWindow().setExitTransition(new Explode());
 
-        findViewById(R.id.login_create_account).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, SignUpActivity.class), ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
-            }
-        });
+        getWindow().setEnterTransition(new Slide(Gravity.RIGHT));
+//        getWindow().setReturnTransition(new Slide(Gravity.LEFT));
 
 
-        Button mSignInButton = (Button) findViewById(R.id.sign_in_button);
-        mSignInButton.setOnClickListener(new OnClickListener() {
+        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
@@ -130,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return true;
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mIdView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
                     .setAction(android.R.string.ok, new View.OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
@@ -169,12 +162,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        mIdView.setError(null);
+        mEmailView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String id = mIdView.getText().toString();
+        String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        int age = Integer.parseInt(((EditText) findViewById(R.id.sign_up_age)).getText().toString());
+        String locate = ((EditText) findViewById(R.id.sign_up_location)).getText().toString();
+        String name = ((EditText) findViewById(R.id.sign_up_name)).getText().toString();
+        String id = ((EditText) findViewById(R.id.sign_up_id)).getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -187,13 +184,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(id)) {
-            mIdView.setError(getString(R.string.error_field_required));
-            focusView = mIdView;
+        if (TextUtils.isEmpty(email)) {
+            mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
             cancel = true;
-        } else if (!isIdValid(id)) {
-            mIdView.setError(getString(R.string.error_invalid_email));
-            focusView = mIdView;
+        } else if (!isEmailValid(email)) {
+            mEmailView.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailView;
             cancel = true;
         }
 */
@@ -205,15 +202,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(id, password);
+            mAuthTask = new UserSighUpTask(id, password, email, name, age, locate);
             mAuthTask.execute((Void) null);
         }
     }
 
-    private boolean isIdValid(String id) {
+    private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        Log.d("WET_id", String.valueOf(id.contains(" ")));
-        return !id.contains(" ");
+        return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
@@ -294,10 +290,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(LoginActivity.this,
+                new ArrayAdapter<>(SignUpActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mIdView.setAdapter(adapter);
+        mEmailView.setAdapter(adapter);
     }
 
 
@@ -315,30 +311,40 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserSighUpTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mId;
+        private final String mEmail;
         private final String mPassword;
+        private final int mAge;
+        private final String mLoaction;
+        private final String mName;
+        private final String mId;
 
-        UserLoginTask(String id, String password) {
-            mId = id;
+        UserSighUpTask(String id, String password, String email, String name, int age, String loaction) {
+            mEmail = email;
             mPassword = password;
+            mAge = age;
+            mLoaction = loaction;
+            mName = name;
+            mId = id;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-            Log.d("WETTETd", "ASDF");
-
 
             try {
-                HttpURLConnection urlConnection = (HttpURLConnection) new URL("http://teamapex.kr/user/signin.php").openConnection();
+                HttpURLConnection urlConnection = (HttpURLConnection) new URL("http://teamapex.kr/user/signup.php").openConnection();
                 urlConnection.setDoOutput(true);
                 urlConnection.setDoInput(true);
 
                 StringBuilder param = new StringBuilder();
-                param.append("&id=" + mId).
-                        append("&passwd=" + mPassword);
+                param.append("name=" + mName).
+                        append("&id=" + mId).
+                        append("&passwd=" + mPassword).
+                        append("&email=" + mEmail).
+                        append("&age=" + String.valueOf(mAge)).
+                        append("&locate=" + mLoaction);
                 urlConnection.setRequestMethod("POST");
 
                 urlConnection.connect();
@@ -348,8 +354,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 BufferedReader bis = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 int responseCode = urlConnection.getResponseCode();
-                Log.d("WETTTTd", String.valueOf(responseCode));
-                Log.d("WETTETd", "ASDF"+ bis.readLine());
+                Log.d("WETTTT", String.valueOf(responseCode));
+                Log.d("WETTET", bis.readLine());
                 out.close();
 
             } catch (MalformedURLException e) {
@@ -360,7 +366,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
-                if (pieces[0].equals(mId)) {
+                if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
                 }
