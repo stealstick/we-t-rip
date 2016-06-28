@@ -1,4 +1,4 @@
-package kr.teamapex.we_t_rip;
+package kr.teamapex.we_t_rip.AccountStuff;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -20,7 +20,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.text.TextUtils;
 import android.transition.Explode;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -42,6 +41,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import kr.teamapex.we_t_rip.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -92,7 +93,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
-        getWindow().setExitTransition(new Explode());
+        getWindow().setExitTransition(new Explode().excludeTarget(R.id.toolbar, true).excludeTarget(android.R.id.statusBarBackground, true));
+//        getWindow().getExitTransition().excludeTarget(R.id.toolbar, true);
+//        getWindow().getExitTransition().excludeTarget(android.R.id.statusBarBackground, true);
 
         findViewById(R.id.login_create_account).setOnClickListener(new OnClickListener() {
             @Override
@@ -349,7 +352,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 BufferedReader bis = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 int responseCode = urlConnection.getResponseCode();
                 Log.d("WETTTTd", String.valueOf(responseCode));
-                Log.d("WETTETd", "ASDF"+ bis.readLine());
+                Log.d("WETTETd", "ASDF" + bis.readLine());
                 out.close();
 
             } catch (MalformedURLException e) {

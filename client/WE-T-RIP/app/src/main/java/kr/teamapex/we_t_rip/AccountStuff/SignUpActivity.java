@@ -1,4 +1,4 @@
-package kr.teamapex.we_t_rip;
+package kr.teamapex.we_t_rip.AccountStuff;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -40,6 +40,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import kr.teamapex.we_t_rip.R;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -91,7 +93,7 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
             }
         });
 
-        getWindow().setEnterTransition(new Slide(Gravity.RIGHT));
+        getWindow().setEnterTransition(new Slide(Gravity.RIGHT).excludeTarget(android.R.id.navigationBarBackground, true).excludeTarget(R.id.toolbar, true).excludeTarget(android.R.id.statusBarBackground, true));
 //        getWindow().setReturnTransition(new Slide(Gravity.LEFT));
 
 

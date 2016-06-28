@@ -1,9 +1,13 @@
-package kr.teamapex.we_t_rip;
+package kr.teamapex.we_t_rip.MainPage;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,9 +22,15 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import kr.teamapex.we_t_rip.AccountStuff.LoginActivity;
+import kr.teamapex.we_t_rip.Adapters.MainFragmentAdapter;
+import kr.teamapex.we_t_rip.MainPage.Fragments.PopularFragment;
+import kr.teamapex.we_t_rip.R;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private ImageView imageView;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +65,23 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
-        imageView = (ImageView) findViewById(R.id.banner_image);
-        Picasso.with(this).load("http://img.naver.net/static/www/mobile/edit/2016/0622/mobile_192852420795.JPG").into(imageView);
 
+
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapseToolbar);
+        
+
+        imageView = (ImageView) findViewById(R.id.banner_image);
+        Picasso.with(this).load("http://cfile26.uf.tistory.com/image/251FC540537B022D377B8D").into(imageView);
+
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        MainFragmentAdapter adapter = new MainFragmentAdapter(getSupportFragmentManager());
+        adapter.addFragment(new PopularFragment(), "추천");
+        adapter.addFragment(new PopularFragment(), "인기");
+        viewPager.setAdapter(adapter);
+
+        tabLayout = (TabLayout) findViewById(R.id.tab);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
