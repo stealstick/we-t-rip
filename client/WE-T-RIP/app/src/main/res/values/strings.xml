@@ -25,4 +25,13 @@
     <string name="goForSignUp">계정이 없으신가요?\n<u>회원가입</u></string>
     <string name="title_activity_sign_up">Sign up</string>
     <string name="prompt_email">이메일</string>
+
+    <!-- Strings related to course -->
+    <string name="course_details">The cheapest Jeju trip :)</string>
+    <string name="course01_01_title">Rail bike</string>
+    <string name="course01_01_expense">10$</string>
+    <string name="course01_01_time">AM 07:00 ~ PM 01:00</string>
+    <string name="course01_01_details">We can watch a nice view of Jeju island!\nLet\'s
+        go together!!!
+    </string>
 </resources>

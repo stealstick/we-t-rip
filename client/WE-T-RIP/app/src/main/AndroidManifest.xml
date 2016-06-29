@@ -32,6 +32,9 @@
         <activity
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up"></activity>
+        <activity
+            android:name=".CourseActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

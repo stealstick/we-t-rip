@@ -6,6 +6,7 @@
         android:icon="@drawable/ic_mode_edit_black_24dp"
         android:title="뭘 수정하는거임?"
         app:showAsAction="always" />
+    <!-- 후기 남기기 ㅇ ㅇ -->
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
