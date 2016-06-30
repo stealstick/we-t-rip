@@ -27,11 +27,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AccountStuff.LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity
             android:name=".AccountStuff.SignUpActivity"
-            android:label="@string/title_activity_sign_up"></activity>
+            android:label="@string/title_activity_sign_up" />
+        <activity
+            android:name=".AccountStuff.NewLoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

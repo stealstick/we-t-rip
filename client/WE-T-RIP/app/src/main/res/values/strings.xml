@@ -8,16 +8,19 @@
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_id">아이디</string>
-    <string name="prompt_password">비밀번호</string>
+    <string name="prompt_id">User name</string>
+    <string name="prompt_password">password</string>
     <string name="prompt_name">이름</string>
     <string name="prompt_age">나이</string>
     <string name="prompt_location">장소</string>
     <string name="action_sign_in">로그인</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">아이디에 공백은 불가능합니다</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_invalid_id">아이디를 입력해주세요</string>
+    <string name="error_incorrect_id">아이디에 공백은 불가능합니다</string>
+    <string name="error_invalid_password">비밀번호를 입력해주세요</string>
+    <string name="error_incorrect_password">비밀번호가 너무 짧습니다</string>
+
     <string name="error_field_required">이 입력란을 입력하시기 바랍니다</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."

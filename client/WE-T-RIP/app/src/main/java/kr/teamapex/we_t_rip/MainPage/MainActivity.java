@@ -22,7 +22,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import kr.teamapex.we_t_rip.AccountStuff.LoginActivity;
+import kr.teamapex.we_t_rip.AccountStuff.NewLoginActivity;
 import kr.teamapex.we_t_rip.Adapters.MainFragmentAdapter;
 import kr.teamapex.we_t_rip.MainPage.Fragments.PopularFragment;
 import kr.teamapex.we_t_rip.R;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                startActivity(new Intent(MainActivity.this, NewLoginActivity    .class));
             }
         });
 
@@ -62,13 +62,13 @@ public class MainActivity extends AppCompatActivity
         username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                startActivity(new Intent(MainActivity.this, NewLoginActivity.class));
             }
         });
 
 
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapseToolbar);
-        
+
 
         imageView = (ImageView) findViewById(R.id.banner_image);
         Picasso.with(this).load("http://cfile26.uf.tistory.com/image/251FC540537B022D377B8D").into(imageView);
