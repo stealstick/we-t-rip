@@ -114,6 +114,19 @@
         android:layout_below="@id/id_2_row"
         android:layout_marginBottom="30dp">
 
+        <Button
+            android:id="@+id/login_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="20dp"
+            android:paddingLeft="100dp"
+            android:paddingRight="100dp"
+            android:paddingTop="20dp"
+            android:text="Login" />
+
         <android.support.v7.widget.CardView
             android:id="@+id/login_card_button"
             android:layout_width="match_parent"
@@ -124,6 +137,7 @@
             android:layout_marginRight="80dp"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
+            android:visibility="gone"
             app:cardBackgroundColor="@color/textColorHint"
             app:cardCornerRadius="4dp">
 
@@ -145,7 +159,7 @@
             android:id="@+id/login_sign_up_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/login_card_button"
+            android:layout_below="@id/login_button"
             android:padding="20dp">
 
             <ImageButton
