@@ -34,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.login_button:
             case R.id.login_card_button:
                 attemptLogin();
                 break;
@@ -52,6 +53,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mpasswordTextView = (AutoCompleteTextView) findViewById(R.id.login_input_password);
         findViewById(R.id.login_card_button).setOnClickListener(this);
         findViewById(R.id.login_sign_up_button).setOnClickListener(this);
+        findViewById(R.id.login_button).setOnClickListener(this);
 
     }
 

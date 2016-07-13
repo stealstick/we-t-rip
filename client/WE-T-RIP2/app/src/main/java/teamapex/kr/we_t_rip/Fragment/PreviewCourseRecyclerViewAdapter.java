@@ -3,10 +3,10 @@ package teamapex.kr.we_t_rip.Fragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -44,11 +44,12 @@ public class PreviewCourseRecyclerViewAdapter extends RecyclerView.Adapter<Previ
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.previewCourse = mPreviewCourse.get(position);
-        String cost = String.valueOf(mPreviewCourse.get(position).getCost());
+        String cost = String.valueOf(mPreviewCourse.get(position).getCost()) + "원";
         String title = mPreviewCourse.get(position).getTitle();
         holder.mCostView.setText(cost);
         holder.mTitleView.setText(title);
         Glide.with(mFragment).load(mPreviewCourse.get(position).getImageURL()).centerCrop().thumbnail(0.2f).into(holder.mImageview);
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +72,8 @@ public class PreviewCourseRecyclerViewAdapter extends RecyclerView.Adapter<Previ
         public final TextView mTitleView;
         public final TextView mCostView;
         public final AppCompatImageView mImageview;
+        public final Toolbar mControlToolbar;
+        public final Toolbar mStatusToolbar;
 
         public PreviewCourse previewCourse;
 
@@ -80,7 +83,12 @@ public class PreviewCourseRecyclerViewAdapter extends RecyclerView.Adapter<Previ
             mTitleView = (TextView) view.findViewById(R.id.courseTitle);
             mCostView = (TextView) view.findViewById(R.id.courseCost);
             mImageview = (AppCompatImageView) view.findViewById(R.id.courseImage);
+            mControlToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+            mStatusToolbar = (Toolbar) view.findViewById(R.id.toolbar_course_status);
+            mControlToolbar.inflateMenu(R.menu.main);
+            mStatusToolbar.inflateMenu(R.menu.preview_course_status);
         }
+
 
         @Override
         public String toString() {
