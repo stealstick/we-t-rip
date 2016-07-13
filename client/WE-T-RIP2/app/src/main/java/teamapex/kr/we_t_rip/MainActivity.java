@@ -1,13 +1,9 @@
-package kr.teamapex.we_t_rip.MainPage;
+package teamapex.kr.we_t_rip;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,27 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
-
-import kr.teamapex.we_t_rip.AccountStuff.NewLoginActivity;
-import kr.teamapex.we_t_rip.Adapters.MainFragmentAdapter;
-import kr.teamapex.we_t_rip.MainPage.Fragments.PopularFragment;
-import kr.teamapex.we_t_rip.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private ImageView imageView;
-    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -46,7 +30,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                startActivity(new Intent(MainActivity.this, NewLoginActivity.class));
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
 
@@ -58,24 +42,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        TextView username = (TextView) navigationView.getHeaderView(0).findViewById(R.id.navigation_user_name);
-        username.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, NewLoginActivity.class));
-            }
-        });
-
-
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        MainFragmentAdapter adapter = new MainFragmentAdapter(getSupportFragmentManager());
-        adapter.addFragment(new PopularFragment(), "추천");
-        adapter.addFragment(new PopularFragment(), "인기");
-        viewPager.setAdapter(adapter);
-
-        tabLayout = (TabLayout) findViewById(R.id.tab);
-        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
@@ -102,6 +68,11 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -109,6 +80,21 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
