@@ -3,7 +3,6 @@ package teamapex.kr.we_t_rip.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +12,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import teamapex.kr.we_t_rip.Fragment.dummy.PreviewCourse;
+import teamapex.kr.we_t_rip.Fragment.data.PreviewCourse;
 import teamapex.kr.we_t_rip.R;
 
 /**
@@ -27,13 +26,14 @@ public class PreviewCourseFragment extends Fragment {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 1;
+    private int mFragmentType = 1;
     private OnListFragmentInteractionListener mListener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
+
     public PreviewCourseFragment() {
     }
 
@@ -50,9 +50,8 @@ public class PreviewCourseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            mFragmentType = getArguments().getInt(ARG_COLUMN_COUNT);
         }
     }
 
@@ -62,19 +61,16 @@ public class PreviewCourseFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_previewcourse_list, container, false);
         mPreviewCourse = new ArrayList<PreviewCourse>();
         for (int i = 0; i < 10; i++) {
-            mPreviewCourse.add(new PreviewCourse("새우 요리 코스", "http://post.phinf.naver.net/20160209_283/ymgs1888_1455016470618NPA7v_JPEG/mug_obj_201602092014349984.jpg?type=w1080", 20000));
+            mPreviewCourse.add(new PreviewCourse("중국 여행 코스", "http://cfile7.uf.tistory.com/image/244A174A51D0D55219D213", 20000));
         }
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new PreviewCourseRecyclerViewAdapter(mPreviewCourse, mListener, this));
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+            recyclerView.setAdapter(new PreviewCourseRecyclerViewAdapter(mPreviewCourse, mListener, this, mFragmentType));
         }
         return view;
     }

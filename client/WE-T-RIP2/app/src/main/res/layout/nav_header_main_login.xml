@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="140dp"
     android:background="@color/colorPrimary"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/account_no_account"
+        app:civ_border_color="#00FFFFFF"
+        app:civ_border_width="2dp" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -13,7 +24,8 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="40dp"
-        android:src="@android:drawable/sym_def_app_icon" />
+        android:src="@android:drawable/sym_def_app_icon"
+        android:visibility="invisible" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -65,13 +77,14 @@
             android:padding="5dp">
 
             <TextView
+                android:id="@+id/nav_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:padding="5dp"
-                android:text="마이페이지"
+                android:text="로그인"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textSize="12sp" />
 
@@ -83,6 +96,7 @@
                 android:background="#FFFFFF" />
 
             <TextView
+                android:id="@+id/nav_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -90,10 +104,9 @@
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:padding="5dp"
-                android:text="로그아웃"
+                android:text="회원가입"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textSize="12sp" />
         </RelativeLayout>
-
     </RelativeLayout>
 </RelativeLayout>

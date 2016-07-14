@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -28,7 +29,7 @@ import teamapex.kr.we_t_rip.Fragment.PreviewCourseFragment;
 import teamapex.kr.we_t_rip.R;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -40,6 +41,15 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -49,13 +59,48 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().findItem(R.id.nav_camera).setChecked(true);
+        setNavigationViewClick(navigationView.getHeaderView(0));
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         CoursePreviewViewPagerAdapter adapter = new CoursePreviewViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new PreviewCourseFragment(), "오늘의 여행");
-        adapter.addFragment(new PreviewCourseFragment(), "내 여행함");
+
+        adapter.addFragment(PreviewCourseFragment.newInstance(0)
+                , "오늘의 여행");
+        adapter.addFragment(PreviewCourseFragment.newInstance(1)
+                , "내 여행함");
+
         viewPager.setAdapter(adapter);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == 1) {
+                    fab.show();
+                } else {
+                    fab.hide();
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         tabLayout.setupWithViewPager(viewPager);
+
+    }
+
+    public void setNavigationViewClick(View headerview) {
+        View view;
+        view = headerview.findViewById(R.id.nav_login);
+        if (view != null) {
+            view.setOnClickListener(this);
+        }
     }
 
     @Override
@@ -74,11 +119,20 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_camera) {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+//            startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.nav_login:
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                break;
+        }
     }
 
     class CoursePreviewViewPagerAdapter extends FragmentPagerAdapter {

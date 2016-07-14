@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#039BE5</color>
     <color name="colorPrimaryDark">#027CB7</color>
-    <color name="colorAccent">#F4511E</color>
+    <color name="colorAccent">#F44336</color>
     <color name="textColorHint">#0288D1</color>
+    <color name="floadingbuttonbackground">#F44336</color>
 </resources>

@@ -1,9 +1,4 @@
-package teamapex.kr.we_t_rip.Fragment.dummy;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+package teamapex.kr.we_t_rip.Fragment.data;
 
 /**
  * Helper class for providing sample content for user interfaces created by

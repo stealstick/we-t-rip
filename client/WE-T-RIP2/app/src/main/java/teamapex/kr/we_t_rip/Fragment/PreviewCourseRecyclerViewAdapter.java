@@ -1,6 +1,9 @@
 package teamapex.kr.we_t_rip.Fragment;
 
+import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.ColorUtils;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,9 +15,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import teamapex.kr.we_t_rip.Fragment.PreviewCourseFragment.OnListFragmentInteractionListener;
-import teamapex.kr.we_t_rip.Fragment.dummy.PreviewCourse;
+import teamapex.kr.we_t_rip.Fragment.data.PreviewCourse;
 import teamapex.kr.we_t_rip.R;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
 
 /**
@@ -27,11 +32,13 @@ public class PreviewCourseRecyclerViewAdapter extends RecyclerView.Adapter<Previ
     private final List<PreviewCourse> mPreviewCourse;
     private final OnListFragmentInteractionListener mListener;
     private Fragment mFragment;
+    private int mFragmentType;
 
-    public PreviewCourseRecyclerViewAdapter(List<PreviewCourse> items, OnListFragmentInteractionListener listener, Fragment fragment) {
+    public PreviewCourseRecyclerViewAdapter(List<PreviewCourse> items, OnListFragmentInteractionListener listener, Fragment fragment, int fragmentType) {
         mPreviewCourse = items;
         mListener = listener;
         mFragment = fragment;
+        mFragmentType = fragmentType;
     }
 
     @Override
@@ -44,7 +51,10 @@ public class PreviewCourseRecyclerViewAdapter extends RecyclerView.Adapter<Previ
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.previewCourse = mPreviewCourse.get(position);
-        String cost = String.valueOf(mPreviewCourse.get(position).getCost()) + "원";
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setDecimalSeparator(',');
+        DecimalFormat decimalFormat = new DecimalFormat("  ###,###,###,###", symbols);
+        String cost = decimalFormat.format(mPreviewCourse.get(position).getCost()) + (char) 0xFFE6;
         String title = mPreviewCourse.get(position).getTitle();
         holder.mCostView.setText(cost);
         holder.mTitleView.setText(title);
@@ -87,6 +97,9 @@ public class PreviewCourseRecyclerViewAdapter extends RecyclerView.Adapter<Previ
             mStatusToolbar = (Toolbar) view.findViewById(R.id.toolbar_course_status);
             mControlToolbar.inflateMenu(R.menu.main);
             mStatusToolbar.inflateMenu(R.menu.preview_course_status);
+            if (mFragmentType == 1) {
+                mCostView.setBackgroundColor(Color.parseColor("#F44336"));
+            }
         }
 
 
