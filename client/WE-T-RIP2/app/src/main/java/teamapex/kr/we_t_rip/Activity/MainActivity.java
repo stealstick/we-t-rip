@@ -1,16 +1,22 @@
 package teamapex.kr.we_t_rip.Activity;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.transition.ChangeImageTransform;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.TransitionManager;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,14 +24,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import teamapex.kr.we_t_rip.Account.LoginActivity;
+import teamapex.kr.we_t_rip.Activity.Submit.SubmitActivity;
 import teamapex.kr.we_t_rip.Fragment.PreviewCourseFragment;
+import teamapex.kr.we_t_rip.Fragment.data.PreviewCourse;
 import teamapex.kr.we_t_rip.R;
 
 public class MainActivity extends AppCompatActivity
@@ -40,13 +48,15 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
+        getWindow().setExitTransition(new Explode());
+        getWindow().setEnterTransition(new Fade());
+
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(MainActivity.this, SubmitActivity.class));
             }
         });
 
@@ -59,16 +69,19 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.getMenu().findItem(R.id.nav_camera).setChecked(true);
+        navigationView.getMenu().findItem(R.id.nav_main).setChecked(true);
         setNavigationViewClick(navigationView.getHeaderView(0));
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         CoursePreviewViewPagerAdapter adapter = new CoursePreviewViewPagerAdapter(getSupportFragmentManager());
+        PreviewCourseFragment fragment1, fragment2;
+        fragment1 = PreviewCourseFragment.newInstance(0);
+        fragment2 = PreviewCourseFragment.newInstance(1);
+        fragment1.setSharedElementReturnTransition(new ChangeImageTransform());
+        fragment1.setExitTransition(new Explode());
 
-        adapter.addFragment(PreviewCourseFragment.newInstance(0)
-                , "오늘의 여행");
-        adapter.addFragment(PreviewCourseFragment.newInstance(1)
-                , "내 여행함");
+        fragment2.setSharedElementEnterTransition(new ChangeImageTransform());
+        fragment2.setEnterTransition(new Explode());
 
         viewPager.setAdapter(adapter);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -92,7 +105,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
         tabLayout.setupWithViewPager(viewPager);
-
     }
 
     public void setNavigationViewClick(View headerview) {
@@ -118,8 +130,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_camera) {
-//            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        if (id == R.id.nav_main) {
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -136,31 +147,31 @@ public class MainActivity extends AppCompatActivity
     }
 
     class CoursePreviewViewPagerAdapter extends FragmentPagerAdapter {
-        final List<Fragment> fragments = new ArrayList<Fragment>();
-        final List<String> fragmentTitles = new ArrayList<String>();
 
         public CoursePreviewViewPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
-        public void addFragment(Fragment fragment, String title) {
-            fragments.add(fragment);
-            fragmentTitles.add(title);
-        }
 
         @Override
         public Fragment getItem(int position) {
-            return fragments.get(position);
+            return PreviewCourseFragment.newInstance(position);
         }
 
         @Override
         public int getCount() {
-            return fragments.size();
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return fragmentTitles.get(position);
+            switch (position) {
+                case 0:
+                    return "오늘의 여행";
+                case 1:
+                    return "내 여행함";
+            }
+            return null;
         }
     }
 }

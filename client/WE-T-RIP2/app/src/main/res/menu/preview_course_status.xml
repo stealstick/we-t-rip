@@ -8,7 +8,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/course_bookmark"
-        android:icon="@drawable/ic_bookmark_black_24dp"
+        android:icon="@drawable/ic_archive_black_24dp"
         android:title="bookmark"
         app:showAsAction="always" />
 </menu>

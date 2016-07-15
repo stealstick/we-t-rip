@@ -11,6 +11,9 @@ public class PreviewCourse {
     private String imageURL;
     private int cost;
 
+
+    private int id;
+
     public PreviewCourse(String title, String imageURL, int cost) {
 
         this.title = title;
@@ -28,6 +31,10 @@ public class PreviewCourse {
 
     public int getCost() {
         return cost;
+    }
+
+    public int getId() {
+        return id;
     }
 
 

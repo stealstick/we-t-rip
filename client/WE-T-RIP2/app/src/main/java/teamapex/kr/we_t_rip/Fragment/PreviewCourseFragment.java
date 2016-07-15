@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class PreviewCourseFragment extends Fragment {
         PreviewCourseFragment fragment = new PreviewCourseFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
+        fragment.setRetainInstance(true);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,26 +55,29 @@ public class PreviewCourseFragment extends Fragment {
         if (getArguments() != null) {
             mFragmentType = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_previewcourse_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_previewcourse_list, container, false);
         mPreviewCourse = new ArrayList<PreviewCourse>();
         for (int i = 0; i < 10; i++) {
             mPreviewCourse.add(new PreviewCourse("중국 여행 코스", "http://cfile7.uf.tistory.com/image/244A174A51D0D55219D213", 20000));
         }
+//        UltimateRecyclerView ultimateRecyclerView = (UltimateRecyclerView) rootView.findViewById(R.id.ultimate_recycler_view);
+//        PreviewCourseUlAdapter adapter = new PreviewCourseUlAdapter(this, mPreviewCourse, mFragmentType);
+//        ultimateRecyclerView.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
+//        ultimateRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        PreviewCourseRecyclerViewAdapter adapter = new PreviewCourseRecyclerViewAdapter(mPreviewCourse, this, mFragmentType);
+        recyclerView.setAdapter(adapter);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-
-            recyclerView.setAdapter(new PreviewCourseRecyclerViewAdapter(mPreviewCourse, mListener, this, mFragmentType));
-        }
-        return view;
+        return rootView;
     }
 
 
