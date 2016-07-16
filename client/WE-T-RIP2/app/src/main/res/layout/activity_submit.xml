@@ -15,6 +15,7 @@
         tools:context="teamapex.kr.we_t_rip.Activity.Submit.SubmitActivity">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay">
@@ -43,7 +44,7 @@
             </RelativeLayout>
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/content_submit" />
+        <include  layout="@layout/content_submit" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"

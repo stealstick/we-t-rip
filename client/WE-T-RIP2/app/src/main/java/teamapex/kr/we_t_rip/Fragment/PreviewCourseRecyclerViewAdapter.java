@@ -25,7 +25,6 @@ import com.squareup.picasso.Picasso;
 
 import teamapex.kr.we_t_rip.Activity.CourseViewActivity;
 import teamapex.kr.we_t_rip.Activity.MainActivity;
-import teamapex.kr.we_t_rip.Fragment.PreviewCourseFragment.OnListFragmentInteractionListener;
 import teamapex.kr.we_t_rip.Fragment.data.PreviewCourse;
 import teamapex.kr.we_t_rip.R;
 
@@ -33,11 +32,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link PreviewCourse} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
+
 public class PreviewCourseRecyclerViewAdapter extends RecyclerView.Adapter<PreviewCourseRecyclerViewAdapter.ViewHolder> {
 
     private final List<PreviewCourse> mPreviewCourse;
@@ -79,6 +74,17 @@ public class PreviewCourseRecyclerViewAdapter extends RecyclerView.Adapter<Previ
                 intent.putExtra("courseTitle", mPreviewCourse.get(position).getTitle());
                 mFragment.startActivity(intent, optionsCompat.toBundle());
 
+            }
+        });
+        holder.mControlToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mFragment.getContext(), CourseViewActivity.class);
+                intent.putExtra("courseImageUrl", mPreviewCourse.get(position).getImageURL());
+//                intent.putExtra("courseNo", mPreviewCourse.get(position).getId());
+                intent.putExtra("courseNo", 1);
+                intent.putExtra("courseTitle", mPreviewCourse.get(position).getTitle());
+                mFragment.startActivity(intent);
             }
         });
         holder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {

@@ -5,7 +5,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,12 +17,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import teamapex.kr.we_t_rip.Account.LoginActivity;
 import teamapex.kr.we_t_rip.Activity.MainActivity;
 import teamapex.kr.we_t_rip.R;
 
 public class SubmitActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,9 @@ public class SubmitActivity extends AppCompatActivity implements NavigationView.
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mViewPager.setAdapter(new SubmitFragmentPagerAdapter(getSupportFragmentManager()));
+
     }
 
     @Override
@@ -70,4 +78,23 @@ public class SubmitActivity extends AppCompatActivity implements NavigationView.
         return true;
     }
 
+    private class SubmitFragmentPagerAdapter extends FragmentStatePagerAdapter {
+
+        public SubmitFragmentPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if (position == 1) {
+                return new Submit2Fragment();
+            }
+            return new SubmitActivityFragment();
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    }
 }

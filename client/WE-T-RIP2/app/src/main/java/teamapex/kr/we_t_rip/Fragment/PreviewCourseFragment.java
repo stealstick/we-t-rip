@@ -16,24 +16,13 @@ import java.util.List;
 import teamapex.kr.we_t_rip.Fragment.data.PreviewCourse;
 import teamapex.kr.we_t_rip.R;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
+
 public class PreviewCourseFragment extends Fragment {
     List<PreviewCourse> mPreviewCourse;
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mFragmentType = 1;
-    private OnListFragmentInteractionListener mListener;
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
 
     public PreviewCourseFragment() {
     }
@@ -67,11 +56,9 @@ public class PreviewCourseFragment extends Fragment {
         for (int i = 0; i < 10; i++) {
             mPreviewCourse.add(new PreviewCourse("중국 여행 코스", "http://cfile7.uf.tistory.com/image/244A174A51D0D55219D213", 20000));
         }
-//        UltimateRecyclerView ultimateRecyclerView = (UltimateRecyclerView) rootView.findViewById(R.id.ultimate_recycler_view);
-//        PreviewCourseUlAdapter adapter = new PreviewCourseUlAdapter(this, mPreviewCourse, mFragmentType);
-//        ultimateRecyclerView.setAdapter(adapter);
-//        adapter.notifyDataSetChanged();
-//        ultimateRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mPreviewCourse.add(new PreviewCourse("애니 여행 코스", "http://wjdtmddnr24.dyndns.org/%EC%95%A0%EB%8B%88/Akame%20ga%20Kill!/poster.jpg", 1000));
+        mPreviewCourse.add(new PreviewCourse("애니 여행 코스", "http://wjdtmddnr24.dyndns.org/%EC%95%A0%EB%8B%88/Date%20A%20Live%20S2/poster.jpg", 1000));
+
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         PreviewCourseRecyclerViewAdapter adapter = new PreviewCourseRecyclerViewAdapter(mPreviewCourse, this, mFragmentType);
@@ -89,21 +76,6 @@ public class PreviewCourseFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(PreviewCourse item);
-    }
 }
