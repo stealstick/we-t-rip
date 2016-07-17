@@ -3,34 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@color/colorPrimary"
     tools:context=".Account.LoginActivity">
 
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/id_row"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary">
+
 
         <ImageView
-            android:id="@+id/plane_icon"
+            android:id="@+id/login_logo"
             android:layout_width="wrap_content"
-            android:layout_height="180dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+            android:layout_height="64dp"
+            android:layout_centerInParent="true"
             android:adjustViewBounds="true"
-            android:paddingTop="26dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/airplane" />
+            android:src="@drawable/wetrip_white" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_below="@id/plane_icon"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="9dp"
-            android:adjustViewBounds="true"
-            android:src="@drawable/we_t_rip" />
+        <TextView
+            android:alpha="0.48"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/login_logo"
+            android:gravity="center"
+            android:text="we trip together" />
     </RelativeLayout>
 
     <LinearLayout
@@ -42,20 +42,14 @@
         android:paddingLeft="45dp"
         android:paddingRight="45dp">
 
-        <ImageView
-            android:layout_width="@dimen/text_height"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            android:adjustViewBounds="true"
-            android:padding="8dp"
-            android:scaleType="fitEnd"
-            android:src="@drawable/account_person" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/id_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true">
+            android:layout_centerInParent="true"
+            app:theme="@style/AppTheme.Login">
+
             <AutoCompleteTextView
                 android:id="@+id/login_input_login"
                 android:layout_width="match_parent"
@@ -64,7 +58,10 @@
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                app:theme="@style/AppTheme.Login" />
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
@@ -78,20 +75,13 @@
         android:paddingLeft="45dp"
         android:paddingRight="45dp">
 
-        <ImageView
-            android:layout_width="@dimen/text_height"
-            android:layout_height="match_parent"
-            android:layout_gravity="bottom"
-            android:adjustViewBounds="true"
-            android:padding="8dp"
-            android:scaleType="fitEnd"
-            android:src="@drawable/account_lock" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/pw_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true">
+            android:layout_centerInParent="true"
+            app:theme="@style/AppTheme.Login">
 
 
             <AutoCompleteTextView
@@ -102,7 +92,10 @@
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                app:theme="@style/AppTheme.Login" />
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
 
@@ -110,7 +103,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/id_2_row"
-        android:layout_marginBottom="30dp">
+        android:layout_marginBottom="30dp"
+        android:background="@color/colorPrimary">
 
         <Button
             android:id="@+id/login_button"
@@ -119,61 +113,39 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center_horizontal"
-            android:paddingBottom="20dp"
+            android:background="@android:color/white"
+            android:paddingBottom="12dp"
             android:paddingLeft="100dp"
             android:paddingRight="100dp"
-            android:paddingTop="20dp"
-            android:background="@color/colorPrimary"
-            android:text="Login" />
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/login_card_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="80dp"
-            android:layout_marginRight="80dp"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:visibility="gone"
-            app:cardBackgroundColor="@color/textColorHint"
-            app:cardCornerRadius="4dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="Login"
-                    android:textColor="#FFFFFF" />
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
+            android:paddingTop="12dp"
+            android:text="Login"
+            android:textColor="@color/colorPrimary" />
 
         <RelativeLayout
             android:id="@+id/login_sign_up_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/login_button"
+            android:layout_marginTop="-10dp"
             android:padding="20dp">
 
-            <ImageButton
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginLeft="75dp"
+                android:layout_marginRight="75dp"
                 android:adjustViewBounds="true"
-                android:background="#00ffffff"
+                android:alpha="0.48"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:padding="50dp"
+                android:maxLines="1"
+                android:padding="8dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/account_go_sign_up" />
+                android:singleLine="true"
+                android:src="@drawable/account_go_sign_up"
+                android:text="@string/login_signup"
+                android:textColor="@android:color/black" />
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

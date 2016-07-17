@@ -1,5 +1,6 @@
 package teamapex.kr.we_t_rip.Activity.Submit;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.wdullaer.materialdatetimepicker.AccessibleTextView;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -19,7 +21,9 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import teamapex.kr.we_t_rip.Activity.Submit.Data.Course;
 import teamapex.kr.we_t_rip.R;
 
 /**
@@ -27,9 +31,13 @@ import teamapex.kr.we_t_rip.R;
  */
 public class SubmitActivityRecyclerViewAdapter extends RecyclerView.Adapter<SubmitActivityRecyclerViewAdapter.ViewHolder> {
     private Fragment mFragment;
+    private List<Course> courseList;
+    private RecyclerView mRecyclerView;
 
-    public SubmitActivityRecyclerViewAdapter(Fragment fragment) {
+    public SubmitActivityRecyclerViewAdapter(Fragment fragment, List<Course> courseList, RecyclerView recyclerView) {
         mFragment = fragment;
+        this.courseList = courseList;
+        mRecyclerView = recyclerView;
     }
 
     @Override
@@ -39,7 +47,8 @@ public class SubmitActivityRecyclerViewAdapter extends RecyclerView.Adapter<Subm
     }
 
     @Override
-    public void onBindViewHolder(final SubmitActivityRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final SubmitActivityRecyclerViewAdapter.ViewHolder holder, final int position) {
+        holder.mTextViewDay.setText(ordinal(courseList.get(position).getCourseDay()) + " DAY");
         holder.mEditTextTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -86,6 +95,11 @@ public class SubmitActivityRecyclerViewAdapter extends RecyclerView.Adapter<Subm
         holder.mViewSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO 저장
+                courseList.add(position + 1, new Course(courseList.get(position).getCourseDay()));
+                notifyDataSetChanged();
+                mRecyclerView.smoothScrollToPosition(position + 1);
+
                 Toast.makeText(mFragment.getContext(), "Saved", Toast.LENGTH_SHORT).show();
             }
         });
@@ -129,6 +143,12 @@ public class SubmitActivityRecyclerViewAdapter extends RecyclerView.Adapter<Subm
                 timePickerDialog.show(mFragment.getActivity().getFragmentManager(), "Datepickerdialog");
             }
         });
+        holder.mImageViewLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mFragment.startActivityForResult(new Intent(mFragment.getContext(), SubmitLocationActivity.class).putExtra("position", position), SubmitActivity.GPS_REQUEST);
+            }
+        });
 
     }
 
@@ -148,11 +168,11 @@ public class SubmitActivityRecyclerViewAdapter extends RecyclerView.Adapter<Subm
 
     @Override
     public int getItemCount() {
-        return 9;
+        return courseList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
+        public final AppCompatTextView mTextViewDay;
         public final AppCompatTextView mTextViewTitle;
         public final AppCompatTextView mTextViewCost;
         public final AppCompatTextView mTextViewStartTime;
@@ -174,6 +194,7 @@ public class SubmitActivityRecyclerViewAdapter extends RecyclerView.Adapter<Subm
             super(view);
             mTextViewTitle = (AppCompatTextView) view.findViewById(R.id.submit_course_title);
             mTextViewCost = (AppCompatTextView) view.findViewById(R.id.submit_course_cost);
+            mTextViewDay = (AppCompatTextView) view.findViewById(R.id.textview_submit_day);
             mTextViewStartTime = (AppCompatTextView) view.findViewById(R.id.submit_course_start_time);
             mTextViewEndTime = (AppCompatTextView) view.findViewById(R.id.submit_course_end_time);
             mEditTextTitle = (AppCompatEditText) view.findViewById(R.id.edittext_submit_title);

@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="140dp"
     android:background="@color/colorPrimary"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="40dp"
-        android:src="@android:drawable/sym_def_app_icon" />
+        android:src="@drawable/account_no_account1"
+        app:civ_border_color="#00FFFFFF"
+        app:civ_border_width="2dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +25,7 @@
         android:layout_alignTop="@+id/imageView"
         android:layout_toRightOf="@id/imageView">
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/nav_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +36,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="20sp" />
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/nav_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,7 +67,8 @@
             android:layout_below="@id/line_divider"
             android:padding="5dp">
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/nav_mypage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -82,7 +86,8 @@
                 android:layout_centerVertical="true"
                 android:background="#FFFFFF" />
 
-            <TextView
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/nav_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

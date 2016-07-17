@@ -4,11 +4,11 @@
     <item
         android:id="@+id/course_favorite"
         android:icon="@drawable/ic_favorite_black_24dp"
-        android:title="favorite"
+        android:title="좋아요"
         app:showAsAction="always" />
     <item
         android:id="@+id/course_bookmark"
         android:icon="@drawable/ic_archive_black_24dp"
-        android:title="bookmark"
+        android:title="다운"
         app:showAsAction="always" />
 </menu>

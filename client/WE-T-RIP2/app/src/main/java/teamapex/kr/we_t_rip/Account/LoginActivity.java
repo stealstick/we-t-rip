@@ -1,26 +1,36 @@
 package teamapex.kr.we_t_rip.Account;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v4.content.SharedPreferencesCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import teamapex.kr.we_t_rip.Activity.MainActivity;
 import teamapex.kr.we_t_rip.R;
 
 /**
@@ -35,7 +45,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.login_button:
-            case R.id.login_card_button:
                 attemptLogin();
                 break;
             case R.id.login_sign_up_button:
@@ -51,7 +60,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mLoginTextView = (AutoCompleteTextView) findViewById(R.id.login_input_login);
         mpasswordTextView = (AutoCompleteTextView) findViewById(R.id.login_input_password);
-        findViewById(R.id.login_card_button).setOnClickListener(this);
         findViewById(R.id.login_sign_up_button).setOnClickListener(this);
         findViewById(R.id.login_button).setOnClickListener(this);
 
@@ -92,7 +100,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (cancel) {
             focusView.requestFocus();
         } else {
-            Toast.makeText(LoginActivity.this, "로그인 작동" + id + password, Toast.LENGTH_SHORT).show();
             mAuthTask = new UserLoginTask(id, password);
             mAuthTask.execute((Void) null);
         }
@@ -108,7 +115,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return password.length() > 7;
     }
 
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<Void, Void, String> {
 
         private final String mId;
         private final String mPassword;
@@ -120,47 +127,91 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-            Log.d("WETTETd", "ASDF");
+        protected String doInBackground(Void... params) {
+            String result;
             try {
-                HttpURLConnection urlConnection = (HttpURLConnection) new URL("http://teamapex.kr/user/signin.php").openConnection();
-                urlConnection.setDoOutput(true);
+                Log.d("wetripURL", "http://metrip.sunrin.io/u/" + mId + "/");
+                URL url = new URL("http://metrip.sunrin.io/u/" + mId + "/");
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setReadTimeout(10000 /* milliseconds */);
+                urlConnection.setConnectTimeout(15000 /* milliseconds */);
+                urlConnection.setRequestMethod("GET");
                 urlConnection.setDoInput(true);
 
-                StringBuilder param = new StringBuilder();
-                param.append("&id=" + mId).
-                        append("&passwd=" + mPassword);
-                urlConnection.setRequestMethod("POST");
-
                 urlConnection.connect();
+                int response = urlConnection.getResponseCode();
+                Log.d("wetrip", "The response is: " + response);
+
+                if (urlConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                    return "";
+                }
+
+                /*
                 DataOutputStream out = new DataOutputStream(urlConnection.getOutputStream());
                 out.writeBytes(param.toString());
                 out.flush();
-
+                */
                 BufferedReader bis = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                int responseCode = urlConnection.getResponseCode();
-                Log.d("WETTTTd", String.valueOf(responseCode));
-                Log.d("WETTETd", "ASDF" + bis.readLine());
-                out.close();
+                result = bis.readLine();
+                Log.d("wetriplogin", "login:" + bis.readLine());
+                //out.close();
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
+                return "";
             } catch (IOException e) {
                 e.printStackTrace();
+                return "";
             }
 
-            // TODO: register the new account here.
-            return true;
+            return result;
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(String result) {
             mAuthTask = null;
             dialog.dismiss();
-            if (success) {
-                finish();
+            if (!result.isEmpty()) {
+                try {
+                    result = result.substring("login :".length() + 1);
+                    JSONObject login = new JSONObject(result);
+                    String id = login.getString("username");
+                    String uniqueId = login.getString("id");
+                    String password = login.getString("passwd");
+                    String location = login.getString("location");
+                    int age = login.getInt("age");
+                    String mycourse = login.getJSONArray("mycourse").toString();
+                    String username = login.getString("username");
+                    String like = login.getJSONArray("like").toString();
+                    String email = login.getString("email");
+                    String name = login.getString("name");
+
+                    SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.clear();
+                    editor.putString("id", id);
+                    editor.putString("username", username);
+                    editor.putString("password", password);
+                    editor.putInt("age", age);
+                    editor.putString("mycourse", mycourse);
+                    editor.putString("like", like);
+                    editor.putString("email", email);
+                    editor.putString("name", name);
+                    editor.putString("uniqueId", uniqueId);
+                    editor.putString("location", location);
+                    editor.apply();
+                    Log.d("JSONObject", "json:" + id);
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+//                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+//                SharedPreferences.Editor editor = pref.edit();
+//                finish();
             } else {
+
                 Toast.makeText(LoginActivity.this, "로그인 도중 오류가 발생하였습니다. 잠시후에 다시 시도해주세요", Toast.LENGTH_SHORT).show();
             }
         }

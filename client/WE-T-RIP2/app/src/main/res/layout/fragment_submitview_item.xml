@@ -6,7 +6,8 @@
     android:layout_marginTop="30dp"
     android:orientation="vertical">
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/textview_submit_day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
