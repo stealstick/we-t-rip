@@ -16,7 +16,7 @@
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowFullscreen">true</item>
-   </style>
+    </style>
 
     <style name="AppTheme.CourseSubmit" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:colorAccent">@color/colorPrimary</item>

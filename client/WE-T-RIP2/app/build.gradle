@@ -32,6 +32,8 @@ dependencies {
     compile 'com.android.support:support-v13:24.0.0'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.wdullaer:materialdatetimepicker:2.3.0'
+
 }
 
 

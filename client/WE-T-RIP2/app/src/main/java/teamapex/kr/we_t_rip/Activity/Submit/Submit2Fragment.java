@@ -12,14 +12,6 @@ import android.view.ViewGroup;
 
 import teamapex.kr.we_t_rip.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Submit2Fragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Submit2Fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Submit2Fragment extends Fragment {
     private RecyclerView mRecyclerView;
     private SubmitActivityRecyclerViewAdapter adapter;
@@ -46,7 +38,7 @@ public class Submit2Fragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_submit2, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        adapter = new SubmitActivityRecyclerViewAdapter();
+        adapter = new SubmitActivityRecyclerViewAdapter(this);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         return view;

@@ -1,5 +1,6 @@
 package teamapex.kr.we_t_rip.Activity.Submit;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
 
 import teamapex.kr.we_t_rip.Activity.MainActivity;
 import teamapex.kr.we_t_rip.R;
@@ -37,8 +40,11 @@ public class SubmitActivity extends AppCompatActivity implements NavigationView.
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(SubmitActivity.this.getCurrentFocus().getWindowToken(), 0);
+                if (mViewPager.getCurrentItem() == 0) {
+                    mViewPager.setCurrentItem(1);
+                }
+
             }
         });
 
@@ -60,9 +66,12 @@ public class SubmitActivity extends AppCompatActivity implements NavigationView.
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (mViewPager.getCurrentItem() != 0) {
+            mViewPager.setCurrentItem(0);
         } else {
             super.onBackPressed();
         }
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
